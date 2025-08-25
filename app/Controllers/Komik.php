@@ -4,9 +4,14 @@ class Komik extends BaseController
 {
     public function index()
     {
-        $data = ['title' => 'Daftar Komik'];
+        // $data = ['title' => 'Daftar Komik'];
 
-        return view('/komik/index', $data);
+        // return view('/komik/index', $data);
+
+        $db = \Config\Database::connect();
+        $query = $db->query("SELECT * FROM komik");
+        $result = $query->getResultArray(); // ambil sebagai array
+        dd($result);
     }
 
     public function create()
