@@ -26,7 +26,11 @@ class Komik extends BaseController
 
     public function create()
     {
-        $data = ['title' => 'Daftar Komik'];
+        session();
+        $data = [
+            'title' => 'Daftar Komik',
+            'validation' => \Config\Services::validation()
+        ];
 
         return view('/komik/create', $data);
     }
@@ -36,6 +40,7 @@ class Komik extends BaseController
         $tempArr = [
             $judul = $this->request->getPost('judul'),
             $penulis = $this->request->getPost('penulis'),
+            $penulis = $this->request->getPost('penerbit'),
             $sampul = $this->request->getFile('sampul')->getClientName()
         ];
 
