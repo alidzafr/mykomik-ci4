@@ -10,7 +10,8 @@
 
                 <div class="mb-3">
                     <label for="judul" class="form-label">Judul</label>
-                    <input name="judul" id="judul" type="text" class="form-control" value="<?= old('judul'); ?>" autofocus>
+                    <input name="judul" id="judul" type="text" class="form-control <?= ($validation->hasError('judul')) ? 'is-invalid' : ''; ?>" value="<?= old('judul'); ?>" autofocus>
+                    <div class="invalid-feedback"><?= ($validation->getError('judul')); ?></div>
                 </div>
 
                 <div class="mb-3">
@@ -25,7 +26,8 @@
 
                 <div class="mb-3">
                     <label for="sampul" class="form-label">Sampul</label>
-                    <input name="sampul" id="sampul" type="file" class="form-control" autofocus>
+                    <input name="sampul" id="sampul" type="file" class="form-control <?= ($validation->hasError('sampul')) ? 'is-invalid' : ''; ?>" autofocus>
+                    <div class="invalid-feedback"><?= ($validation->getError('sampul')); ?></div>
                 </div>
 
                 <button type="submit" class="btn btn-success">Simpan</button>

@@ -37,6 +37,27 @@ class Komik extends BaseController
 
     public function store()
     {
+        $rules = [
+            'judul' => [
+                'rules' => 'required|min_length[3]|is_unique[komik.judul]',
+                'errors' => [
+                    'required'   => 'Judul harus diisi.',
+                    'min_length' => 'Judul minimal 3 karakter.',
+                    'is_unique'  => 'Judul sudah ada di database.'
+                ]
+            ],
+            'sampul' => [
+                'rules' => 'uploaded[sampul]',
+                'errors' => [
+                    'uploaded'   => 'Gambar sampul harus diisi.'
+                ]
+            ]
+        ];
+
+        if (!$this->validate($rules)) {
+            return redirect()->back()->withInput();
+        }
+
         $tempArr = [
             $judul = $this->request->getPost('judul'),
             $penulis = $this->request->getPost('penulis'),
