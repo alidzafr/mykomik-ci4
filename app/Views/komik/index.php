@@ -4,6 +4,12 @@
 <div class="container">
     <div class="col">
 
+        <?php if (session()->getFlashdata('pesan')) : ?>
+            <div class="alert alert-success" role="alert">
+                <?= session()->getFlashdata('pesan'); ?>
+            </div>
+        <?php endif; ?>
+
         <h2 class="mt-2">Daftar Komik</h2>
         <a href="/create" class="btn btn-primary mb-3">Tambah Data Komik</a>
 

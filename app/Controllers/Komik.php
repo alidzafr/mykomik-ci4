@@ -43,13 +43,30 @@ class Komik extends BaseController
                 'errors' => [
                     'required'   => 'Judul harus diisi.',
                     'min_length' => 'Judul minimal 3 karakter.',
-                    'is_unique'  => 'Judul sudah ada di database.'
+                    'is_unique'  => 'Judul komik tidak boleh sama.'
+                ]
+            ],
+            'penulis' => [
+                'rules' => 'required|max_length[30]',
+                'errors' => [
+                    'required' => 'penulis harus diisi.',
+                    'max_length' => 'Jumlah huruf tidak boleh melebihi 30'
+                ]
+            ],
+            'penerbit' => [
+                'rules' => 'required|max_length[30]',
+                'errors' => [
+                    'required' => 'penerbit harus diisi.',
+                    'max_length' => 'Jumlah huruf tidak boleh melebihi 30'
                 ]
             ],
             'sampul' => [
-                'rules' => 'uploaded[sampul]',
+                'rules' => 'uploaded[sampul]|max_size[sampul,1024]|is_image[sampul]|mime_in[sampul,image/jpg,image/jpeg,image/png]',
                 'errors' => [
-                    'uploaded'   => 'Gambar sampul harus diisi.'
+                    'uploaded' => 'Pilih gambar sampul terlebih dahulu.',
+                    'max_size' => 'Ukuran maksimal 1MB.',
+                    'is_image' => 'File yang anda pilih bukan gambar.',
+                    'mime_in'  => 'Sampul hanya boleh JPG/PNG.'
                 ]
             ]
         ];
@@ -58,13 +75,34 @@ class Komik extends BaseController
             return redirect()->back()->withInput();
         }
 
-        $tempArr = [
-            $judul = $this->request->getPost('judul'),
-            $penulis = $this->request->getPost('penulis'),
-            $penulis = $this->request->getPost('penerbit'),
-            $sampul = $this->request->getFile('sampul')->getClientName()
-        ];
+        // ambil gambar, rename & move ke public/img
+        $fileSampul = $this->request->getFile('sampul');
+        $namaSampul =  $fileSampul->getRandomName();
+        $fileSampul->move('img', $namaSampul);
 
-        dd($tempArr);
+        // url_title = mengkonversi huruf kecil dan separator menjadi -
+        $slug = url_title($this->request->getVar('judul'), '-', true);
+
+        $this->komikModel->save([
+            'judul' => $this->request->getVar('judul'),
+            'slug' => $slug,
+            'penulis' => $this->request->getVar('penulis'),
+            'penerbit' => $this->request->getVar('penerbit'),
+            'sampul' => $namaSampul
+        ]);
+
+        session()->setFlashdata('pesan', 'data berhasil disimpan');
+
+        return redirect()->to('/');
+
+        // $tempArr = [
+        //     $judul = $this->request->getVar('judul'),
+        //     $inislug = $slug,   
+        //     $penulis = $this->request->getVar('penulis'),
+        //     $penulis = $this->request->getVar('penerbit'),
+        //     $sampul = $fileSampul->getName()
+        // ];
+
+        // dd($tempArr);
     }
 }
