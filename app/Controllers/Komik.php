@@ -105,4 +105,21 @@ class Komik extends BaseController
 
         // dd($tempArr);
     }
+
+    public function detail($slug)
+    {
+        // echo $slug;
+        $data = [
+            'title' => 'Daftar Komik',
+            'komik' => $this->komikModel->getKomik($slug),
+            'nav1' => '',
+            'nav2' => ''
+        ];
+        // Jika komik tidak ada di tabel
+        if (empty($data['komik'])) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Judul komik ' . $slug . ' tidak ditemukan');
+        }
+
+        return view('komik/detail', $data);
+    }
 }
