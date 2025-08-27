@@ -122,4 +122,21 @@ class Komik extends BaseController
 
         return view('komik/detail', $data);
     }
+
+
+    public function delete($id)
+    {
+        $komik = $this->komikModel->find($id);
+
+        // gambar tidak dihapus apabila isinya default.jpg
+        if ($komik['sampul'] != 'default.jpg') {
+            unlink('img/' . $komik['sampul']);
+        }
+
+        $this->komikModel->delete($id);
+
+        session()->setFlashdata('pesan', 'data berhasil dihapus');
+
+        return redirect()->to('/');
+    }
 }
