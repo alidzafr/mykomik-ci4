@@ -111,9 +111,7 @@ class Komik extends BaseController
         // echo $slug;
         $data = [
             'title' => 'Daftar Komik',
-            'komik' => $this->komikModel->getKomik($slug),
-            'nav1' => '',
-            'nav2' => ''
+            'komik' => $this->komikModel->getKomik($slug)
         ];
         // Jika komik tidak ada di tabel
         if (empty($data['komik'])) {
@@ -121,6 +119,54 @@ class Komik extends BaseController
         }
 
         return view('komik/detail', $data);
+    }
+
+    public function edit($slug)
+    {
+        $data = [
+            'title' => 'Edit Komik',
+            'validation' => \config\Services::validation(),
+            'komik' => $this->komikModel->getKomik($slug)
+        ];
+
+        return view('komik/edit', $data);
+    }
+
+    public function update($id)
+    {
+        if (!$this->validate(
+            [
+                'judul' => [
+                    'rules' => 'required|min_length[3]|is_unique[komik.judul]',
+                    'errors' => [
+                        'required'   => 'Judul harus diisi.',
+                        'min_length' => 'Judul minimal 3 karakter.',
+                        'is_unique'  => 'Judul komik tidak boleh sama.'
+                    ]
+                ],
+                'penulis' => [
+                    'rules' => 'required|max_length[30]',
+                    'errors' => [
+                        'required' => 'penulis harus diisi.',
+                        'max_length' => 'Jumlah huruf tidak boleh melebihi 30'
+                    ]
+                ],
+                'penerbit' => [
+                    'rules' => 'required|max_length[30]',
+                    'errors' => [
+                        'required' => 'penerbit harus diisi.',
+                        'max_length' => 'Jumlah huruf tidak boleh melebihi 30'
+                    ]
+                ]
+            ]
+        )) {
+            $validation = \Config\Services::validation();
+            // dd($this->request->getVar());
+            // dd('validasi gagal');
+            return redirect()->to('/komik/edit/' . $this->request->getVar('slug'))->withInput()->with('validation', $validation);
+            // return redirect()->back()->withInput();
+        }
+        dd('validasi berhasil');
     }
 
 
