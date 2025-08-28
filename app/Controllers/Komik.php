@@ -166,7 +166,7 @@ class Komik extends BaseController
             return redirect()->to('/komik/edit/' . $this->request->getVar('slug'))->withInput()->with('validation', $validation);
             // return redirect()->back()->withInput();
         }
-        dd('validasi berhasil');
+        dd($this->request->getVar());
     }
 
 
