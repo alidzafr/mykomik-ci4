@@ -13,19 +13,19 @@
                 <input type="hidden" name="oldSampul" value="<?= $komik['sampul']; ?>">
                 <div class="mb-3">
                     <label for="judul" class="form-label">Judul</label>
-                    <input name="judul" id="judul" type="text" class="form-control <?= ($validation->hasError('judul')) ? 'is-invalid' : ''; ?>" value="<?= $komik['judul']; ?>" autofocus>
+                    <input name="judul" id="judul" type="text" class="form-control <?= ($validation->hasError('judul')) ? 'is-invalid' : ''; ?>" value="<?= (old('judul')) ? old('judul') : $komik['judul']; ?>" autofocus>
                     <div class="invalid-feedback"><?= ($validation->getError('judul')); ?></div>
                 </div>
 
                 <div class="mb-3">
                     <label for="penulis" class="form-label">Penulis</label>
-                    <input name="penulis" id="penulis" type="text" class="form-control <?= ($validation->hasError('penulis')) ? 'is-invalid' : ''; ?>" value="<?= $komik['penulis']; ?>">
+                    <input name="penulis" id="penulis" type="text" class="form-control <?= ($validation->hasError('penulis')) ? 'is-invalid' : ''; ?>" value="<?= (old('penulis')) ? old('penulis') : $komik['penulis']; ?>">
                     <div class="invalid-feedback"><?= ($validation->getError('penulis')); ?></div>
                 </div>
 
                 <div class="mb-3">
                     <label for="penerbit" class="form-label">Penerbit</label>
-                    <input name="penerbit" id="penerbit" type="text" class="form-control <?= ($validation->hasError('penerbit')) ? 'is-invalid' : ''; ?>" value="<?= $komik['penerbit']; ?>">
+                    <input name="penerbit" id="penerbit" type="text" class="form-control <?= ($validation->hasError('penerbit')) ? 'is-invalid' : ''; ?>" value="<?= (old('penerbit')) ? old('penerbit') : $komik['penerbit']; ?>">
                     <div class="invalid-feedback"><?= ($validation->getError('penerbit')); ?></div>
                 </div>
 
