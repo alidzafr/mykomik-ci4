@@ -5,12 +5,12 @@
     <div class="row">
         <div class="col-8">
 
-            <form action="/komik/update/<?= $komik['id']; ?>" method="post">
-                <input type="hidden" name="_method" value="PUT">
+            <form action="/komik/update/<?= $komik['id']; ?>" method="post" enctype="multipart/form-data">
 
                 <?= csrf_field(); ?>
 
                 <input type="hidden" name="slug" value="<?= $komik['slug']; ?>">
+                <input type="hidden" name="oldSampul" value="<?= $komik['sampul']; ?>">
                 <div class="mb-3">
                     <label for="judul" class="form-label">Judul</label>
                     <input name="judul" id="judul" type="text" class="form-control <?= ($validation->hasError('judul')) ? 'is-invalid' : ''; ?>" value="<?= $komik['judul']; ?>" autofocus>
