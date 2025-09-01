@@ -179,14 +179,14 @@ class Komik extends BaseController
                         'required' => 'penerbit harus diisi.',
                         'max_length' => 'Jumlah huruf tidak boleh melebihi 30'
                     ]
-                // ],
-                // 'sampul' => [
-                //     'rules' => 'max_size[sampul,1024]|is_image[sampul]|mime_in[sampul,image/jpg,image/jpeg,image/png]',
-                //     'errors' => [
-                //         'max_size' => 'Ukuran gambar maksimal 1MB.',
-                //         'is_image' => 'File yang anda pilih bukan gambar.',
-                //         'mime_in'  => 'Sampul hanya boleh JPG/PNG.'
-                //     ]
+                ],
+                'sampul' => [
+                    'rules' => 'max_size[sampul,1024]|is_image[sampul]|mime_in[sampul,image/jpg,image/jpeg,image/png]',
+                    'errors' => [
+                        'max_size' => 'Ukuran gambar maksimal 1MB.',
+                        'is_image' => 'File yang anda pilih bukan gambar.',
+                        'mime_in'  => 'Sampul hanya boleh JPG/PNG.'
+                    ]
                 ]
             ]
         )) {
