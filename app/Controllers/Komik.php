@@ -191,7 +191,6 @@ class Komik extends BaseController
             ]
         )) {
             return redirect()->to('/komik/edit/' . $this->request->getVar('slug'))->withInput();
-            // return redirect()->back()->withInput();
         }
 
         // ambil gambar
@@ -217,8 +216,12 @@ class Komik extends BaseController
             'slug' => $slug,
             'penulis' => $this->request->getVar('penulis'),
             'penerbit' => $this->request->getVar('penerbit'),
-            'sampul' => $fileSampul
+            'sampul' => $namaSampul
         ]);
+
+        session()->setFlashdata('pesan', 'data berhasil diubah');
+    
+        return redirect()->to('/');
     }
 
 
